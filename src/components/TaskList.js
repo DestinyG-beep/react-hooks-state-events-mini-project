@@ -1,16 +1,12 @@
 import React from "react";
-import Task from "./Task"; // Import Task component
+import Task from "./Task";
 
-function TaskList({ tasks, onDeleteTask }) {
+function TaskList({tasks,onDeleteTask}) {
   return (
     <div className="tasks">
-      {tasks && tasks.length > 0 ? (
-        tasks.map((task) => (
-          <Task key={task.id} task={task} onDelete={onDeleteTask} />
-        ))
-      ) : (
-        <p>No tasks available</p> // Display a message if no tasks are available
-      )}
+      {tasks.map((task, index) => (
+        <Task key={`${task.key} - ${index}`}  text={task.text} category={task.category} onDeleteTask={onDeleteTask}/>
+      ))}
     </div>
   );
 }

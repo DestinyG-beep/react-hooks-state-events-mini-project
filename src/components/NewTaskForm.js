@@ -1,47 +1,32 @@
 import React, { useState } from "react";
 
-function NewTaskForm({ categories, onTaskFormSubmit }) {
-  // State to store the form values
-  const [taskText, setTaskText] = useState("");
-  const [taskCategory, setTaskCategory] = useState(categories[0] || "All"); // Default to the first category
-
-  // Handle form submit
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submit behavior
-
-    if (taskText.trim() && taskCategory) {
-      // Create a new task object and pass it to the parent component
-      const newTask = {
-        text: taskText,
-        category: taskCategory,
-      };
-      onTaskFormSubmit(newTask); // Call the callback with the new task
-      setTaskText(""); // Reset the form inputs
-      setTaskCategory(categories[0] || "All"); // Reset to the first category
+function NewTaskForm({categories, onTaskFormSubmit}) {
+  const [text, setText] = useState("")
+  const [category, setCategory] = useState(categories[1])
+  const handleSubmit = (event) =>{
+    event.preventDefault()
+    const newTask = {
+      text: text,
+      category: category
     }
-  };
+    onTaskFormSubmit(newTask)
+    setText("")
+    setCategory(categories[1])
 
+    
+  }
   return (
     <form className="new-task-form" onSubmit={handleSubmit}>
       <label>
         Details
-        <input
-          type="text"
-          name="text"
-          value={taskText}
-          onChange={(e) => setTaskText(e.target.value)} // Update task text on input change
-        />
+        <input type="text" name="text" value={text} onChange={(e) => setText(e.target.value)}/>
       </label>
       <label>
         Category
-        <select
-          name="category"
-          value={taskCategory}
-          onChange={(e) => setTaskCategory(e.target.value)} // Update category on change
-        >
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+        <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+          {categories.filter((cat) => cat !== "All").map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
             </option>
           ))}
         </select>
